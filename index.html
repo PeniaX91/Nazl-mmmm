@@ -1,22 +1,141 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nazlı Gibi</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nazlım</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(120deg, #d7e9f7, #fce4ec);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #5c6bc0;
+      margin-top: 60px;
+      animation: fadeIn 2s ease;
+    }
+
+    #question {
+      font-size: 1.8em;
+      margin: 30px 0;
+      color: #333;
+      transition: 0.3s ease;
+    }
+
+    .btn {
+      font-size: 1.2em;
+      padding: 15px 30px;
+      margin: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background-color: #81d4fa;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #ef9a9a;
+      color: white;
+      position: absolute;
+    }
+
+    #note {
+      font-size: 2em;
+      color: #6a1b9a;
+      margin-top: 40px;
+      display: none;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .flower {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, #64b5f6, #1e88e5);
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="question">Seni özledim… Tekrar birlikte olalım mı?</h1>
-        <div class="buttons">
-            <button id="yesBtn">Evet</button>
-            <button id="noBtn">Hayır</button>
-        </div>
-        <p id="finalMessage" class="hidden">Seni çok seviyorum.</p>
-        <div class="hearts" id="heartsContainer"></div>
-    </div>
-    <script src="script.js"></script>
+
+  <h1>Seni Özledim</h1>
+  <div id="question">Tekrar birlikte olalım mı?</div>
+  <button class="btn" id="yesBtn">Evet</button>
+  <button class="btn" id="noBtn">Hayır</button>
+  <div id="note">Seni çok seviyorum Nazlım 💜</div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const question = document.getElementById("question");
+    const note = document.getElementById("note");
+
+    let stage = 0;
+
+    yesBtn.onclick = () => {
+      if (stage === 0) {
+        question.innerText = "Sen de beni özledin mi?";
+        stage++;
+      } else if (stage === 1) {
+        question.innerText = "Emin misin?";
+        stage++;
+      } else {
+        question.style.display = "none";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+        note.style.display = "block";
+        for (let i = 0; i < 50; i++) {
+          createFlower();
+        }
+        setInterval(() => {
+          createFlower();
+        }, 800);
+      }
+    };
+
+    noBtn.onmouseover = () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    };
+
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.className = "flower";
+      flower.style.left = `${Math.random() * 100}%`;
+      flower.style.animationDuration = `${5 + Math.random() * 10}s`;
+      document.body.appendChild(flower);
+      setTimeout(() => {
+        flower.remove();
+      }, 15000);
+    }
+  </script>
 </body>
 </html>
